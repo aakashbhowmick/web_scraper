@@ -119,7 +119,7 @@ class SeenUnseenScraper:
 
         # Fetch base page for year
         base_page = self.__get_page_soup(self.base_url_year)
-        if not base_page: return None
+        if base_page is None: return None
         else : self.__write_log('Base page fetched')
         
         # Fetch all episode URLS on this page and filter episode urls
@@ -135,7 +135,7 @@ class SeenUnseenScraper:
                 time.sleep(self.req_delay_second)
             
             ep_page = self.__get_page_soup(ep_url)
-            if not ep_page: continue  # Skip episode if page could not be fetched
+            if ep_page is None: continue  # Skip episode if page could not be fetched
             else : self.__write_log(f'Episode fetched : {ep_url}')
                 
             # Get URL text for all Amazon URLS)
@@ -194,5 +194,5 @@ if __name__ == "__main__":
 
     scraper = SeenUnseenScraper(year=year, log_filepath=os.path.join(proj_path, 'log.txt'))
     df_books = scraper.get_books()
-    if df_books: 
+    if df_books is not None: 
         df_books.to_csv(os.path.join(proj_path, f'books_{year}.csv'), header=True, index=False)
