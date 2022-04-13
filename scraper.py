@@ -47,7 +47,7 @@ class SeenUnseenScraper:
             result = req.get(url)
         except req.exceptions.RequestException as exp:
             # Request failed. Log this
-            self.__write_log('Failed getting URL : {url} ; Error : {exp}')
+            self.__write_log(f'Failed getting URL : {url} ; Error : {exp}')
             return None 
         else:
             return bs4.BeautifulSoup(result.content, "html.parser")
@@ -119,7 +119,8 @@ class SeenUnseenScraper:
 
         # Fetch base page for year
         base_page = self.__get_page_soup(self.base_url_year)
-        self.__write_log('Base page fetched')
+        if not base_page: return None
+        else : self.__write_log('Base page fetched')
         
         # Fetch all episode URLS on this page and filter episode urls
         base_page_urls = [a['href'] for a in base_page.findAll('a') if a.has_attr('href')]
@@ -193,4 +194,5 @@ if __name__ == "__main__":
 
     scraper = SeenUnseenScraper(year=year, log_filepath=os.path.join(proj_path, 'log.txt'))
     df_books = scraper.get_books()
-    df_books.to_csv(os.path.join(proj_path, f'books_{year}.csv'), header=True, index=False)
+    if df_books: 
+        df_books.to_csv(os.path.join(proj_path, f'books_{year}.csv'), header=True, index=False)
