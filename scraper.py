@@ -4,6 +4,7 @@ import re
 import pandas as pd
 import datetime as dt
 import os
+import time
 
 
 class SeenUnseenScraper:
@@ -129,7 +130,7 @@ class SeenUnseenScraper:
             
             # Insert some delay, if needed
             if self.req_delay_second:
-                sleep(self.req_delay_second)
+                time.sleep(self.req_delay_second)
             
             ep_page = self.__get_page_soup(ep_url)
             if not ep_page: continue  # Skip episode if page could not be fetched
