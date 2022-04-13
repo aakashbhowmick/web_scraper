@@ -187,6 +187,8 @@ class SeenUnseenScraper:
 
 if __name__ == "__main__":
     proj_path = '/hdd/home_dir/aakash/exp/o9_proj/'
-    scraper = SeenUnseenScraper(year=2021, log_filepath=os.path.join(proj_path, 'log.txt'))
+    year = 2021
+
+    scraper = SeenUnseenScraper(year=year, log_filepath=os.path.join(proj_path, 'log.txt'))
     df_books = scraper.get_books()
-    df_books.to_csv(os.path.join(proj_path, 'books.csv'), header=True, index=False)
+    df_books.to_csv(os.path.join(proj_path, f'books_{year}.csv'), header=True, index=False)
