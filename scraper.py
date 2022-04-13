@@ -121,8 +121,9 @@ class SeenUnseenScraper:
         base_page = self.__get_page_soup(self.base_url_year)
         self.__write_log('Base page fetched')
         
-        # Fetch all episode URLS on this page
-        ep_urls = set([a['href'] for a in base_page.findAll('a') if self.__is_episode_url(a['href'])])
+        # Fetch all episode URLS on this page and filter episode urls
+        base_page_urls = [a['href'] for a in base_page.findAll('a') if a.has_attr('href')]
+        ep_urls = set([url for url in base_page_urls if self.__is_episode_url(url)])
         
         # Fetch each episode URL
         df_list = []
@@ -136,8 +137,9 @@ class SeenUnseenScraper:
             if not ep_page: continue  # Skip episode if page could not be fetched
             else : self.__write_log(f'Episode fetched : {ep_url}')
                 
-            # Get URL text for all Amazon URLS 
-            amazon_books  = [a.contents[0] for a in ep_page.findAll('a') if self.__is_target_url(a['href'])]
+            # Get URL text for all Amazon URLS)
+            ep_page_urls = [a for a in ep_page.findAll('a') if a.has_attr('href')]
+            amazon_books  = [a.contents[0] for a in ep_page_urls if self.__is_target_url(a['href'])]
             
             if len(amazon_books) == 0: continue
                 
