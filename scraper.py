@@ -122,7 +122,7 @@ class SeenUnseenScraper:
         self.__write_log('Base page fetched')
         
         # Fetch all episode URLS on this page
-        ep_urls = [a['href'] for a in base_page.findAll('a') if self.__is_episode_url(a['href'])]
+        ep_urls = set([a['href'] for a in base_page.findAll('a') if self.__is_episode_url(a['href'])])
         
         # Fetch each episode URL
         df_list = []
