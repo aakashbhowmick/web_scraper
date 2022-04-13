@@ -171,7 +171,7 @@ class SeenUnseenScraper:
                     |       0      |   'Book0'   |
                     
         """
-        self.log_file = open(self.log_filepath, 'a') if self.log_filepath else None
+        self.log_file = open(self.log_filepath, 'w') if self.log_filepath else None
         
         try:
             result = self.__get_books_as_dataframe()
