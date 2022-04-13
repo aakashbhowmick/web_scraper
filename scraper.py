@@ -11,8 +11,11 @@ class SeenUnseenScraper:
     """ A book scraper for the website 'seenunseen.in'
     """
     
+    # Base URL
     base_url = 'https://seenunseen.in/episodes/'
+    # Regex pattern for episode URLS
     ep_url_pattern = r'https?://seenunseen.in/episodes/([0-9]+)/([0-9]+)/([0-9]+)/episode-([0-9]+)-.+'
+    # Regex pattern for Amazon urls
     target_url_pattern = r'https?://[w.]*amazon.[a-z]+'
     
     
